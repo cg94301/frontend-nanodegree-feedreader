@@ -31,12 +31,25 @@ $(function() {
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
+        it('have URLs', function() {
+            allFeeds.forEach( function(feed) {
+                expect(feed.url).toBeDefined();
+                expect(feed.url).not.toBe("");
+            });
+        });
 
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
+        it('have names', function() {
+            allFeeds.forEach( function(feed) {
+                expect(feed.name).toBeDefined();
+                expect(feed.name).not.toBe("");
+            });
+        });
+
     });
 
 
@@ -53,6 +66,21 @@ $(function() {
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
+    describe('The menu', function() {
+        
+        it('is hidden per default', function() {
+            expect(document.getElementsByClassName('menu-hidden')[0].className).toBe('menu-hidden');
+        });
+        it('visibility can be toggled', function() {
+            var event = {
+                type: 'click'
+            };
+            $('.menu-icon-link').trigger(event);
+            expect(document.getElementsByClassName('menu-hidden')[0]).toBeUndefined();
+            $('.menu-icon-link').trigger(event);
+            expect(document.getElementsByClassName('menu-hidden')[0].className).toBe('menu-hidden');
+        });
+    });
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
@@ -62,6 +90,35 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test wil require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+    describe('Initial Entries', function() {
+        
+        beforeAll(function(done) {
+            console.log('start');
+            console.log(new Date().getTime());
+            
+            spyOn(window, 'loadFeed').and.callThrough();
+
+            setTimeout(function() {
+                value = 0;
+                console.log('stop');
+                console.log(new Date().getTime());
+                done();
+            }, 1000); // 5000 == 5s 
+        });
+
+        it('loadFeed has been called', function() {
+            expect(window.loadFeed).toHaveBeenCalled();
+        });
+
+        it('at least one entry was created', function() {
+            console.log('async call');
+            console.log(new Date().getTime());
+            console.log(document.getElementsByClassName('entry').length);
+            expect(document.getElementsByClassName('entry').length).toBeGreaterThan(0);
+        });
+        
+    });
+    
 
     /* TODO: Write a new test suite named "New Feed Selection"
 
@@ -69,4 +126,50 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+    describe('New Feed Selection', function() {
+
+        var titleOne = '';
+        var titleTwo = '';
+
+        beforeAll(function(done) {
+            console.log('start');
+            console.log(new Date().getTime());
+            
+            spyOn(window, 'loadFeed').and.callThrough();
+
+            setTimeout(function() {
+                value = 0;
+                console.log('stop');
+                console.log(new Date().getTime());
+                done();
+            }, 1000); // 5000 == 5s 
+        });
+
+        it('original feed load complete', function() {
+            value++;
+            console.log('async call');
+            console.log(new Date().getTime());
+            console.log(document.getElementsByClassName('entry')[0].children[0].innerHTML);
+            titleOne = document.getElementsByClassName('entry')[0].children[0].innerHTML;
+            console.log(titleOne);
+            expect(value).toBeGreaterThan(0);
+            loadFeed(1);
+            //expect(document.getElementsByClassName('entry').length).toBeGreaterThan(0);
+        });
+        
+        it('new feed load complete', function(done) {
+            setTimeout(function() {
+                console.log('2nd call');
+                console.log(new Date().getTime()); 
+                //expect(value).toBeGreaterThan(0);
+                titleTwo = document.getElementsByClassName('entry')[0].children[0].innerHTML;
+                console.log(titleTwo);
+                expect(titleOne).not.toEqual(titleTwo);
+                done();
+            }, 1000);
+        });
+
+    });
+
+
 }());
