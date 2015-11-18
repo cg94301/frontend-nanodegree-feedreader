@@ -9,7 +9,7 @@ Fork this repository on Github, then clone it onto your machine from your Github
 This will create directory $YOUR_PROJECT_DIR/frontend-nanodegree-feedreader containing file index.html. Open index.html in Chrome browser. You will see a page that is partitioned into two halfs. The upper half is the feedreader application and the lower half is the Jasmine test runner showing test results. All test should pass indicating 9 specs, 0 failures.
 
 
-![](jasmine.png)
+![Pic of Jasmine test runner](jasmine.png)
 
 ---
 
