@@ -15,7 +15,6 @@ This will create directory $YOUR_PROJECT_DIR/frontend-nanodegree-feedreader cont
 
 # Udacity Instructions:
 
----
 
 # Project Overview
 
