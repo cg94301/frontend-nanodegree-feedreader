@@ -10,9 +10,9 @@
  */
 $(function() {
     /* This is our first test suite - a test suite just contains
-    * a related set of tests. This suite is all about the RSS
-    * feeds definitions, the allFeeds variable in our application.
-    */
+     * a related set of tests. This suite is all about the RSS
+     * feeds definitions, the allFeeds variable in our application.
+     */
     describe('RSS Feeds', function() {
         /* This is our first test - it tests to make sure that the
          * allFeeds variable has been defined and that it is not
@@ -55,22 +55,23 @@ $(function() {
 
     /* TODO: Write a new test suite named "The menu" */
 
-        /* TODO: Write a test that ensures the menu element is
-         * hidden by default. You'll have to analyze the HTML and
-         * the CSS to determine how we're performing the
-         * hiding/showing of the menu element.
-         */
+    /* TODO: Write a test that ensures the menu element is
+     * hidden by default. You'll have to analyze the HTML and
+     * the CSS to determine how we're performing the
+     * hiding/showing of the menu element.
+     */
 
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
-          */
+    /* TODO: Write a test that ensures the menu changes
+     * visibility when the menu icon is clicked. This test
+     * should have two expectations: does the menu display when
+     * clicked and does it hide when clicked again.
+     */
     describe('The menu', function() {
-        
+
         it('is hidden per default', function() {
             expect(document.getElementsByClassName('menu-hidden')[0].className).toBe('menu-hidden');
         });
+
         it('visibility can be toggled', function() {
             var event = {
                 type: 'click'
@@ -80,30 +81,35 @@ $(function() {
             $('.menu-icon-link').trigger(event);
             expect(document.getElementsByClassName('menu-hidden')[0].className).toBe('menu-hidden');
         });
+
     });
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test wil require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
-         */
+    /* TODO: Write a test that ensures when the loadFeed
+     * function is called and completes its work, there is at least
+     * a single .entry element within the .feed container.
+     * Remember, loadFeed() is asynchronous so this test wil require
+     * the use of Jasmine's beforeEach and asynchronous done() function.
+     */
     describe('Initial Entries', function() {
-        
-        beforeAll(function(done) {
-            console.log('start');
-            console.log(new Date().getTime());
-            
-            spyOn(window, 'loadFeed').and.callThrough();
 
+        console.log('start1');
+        console.log(new Date().getTime());
+
+        beforeAll(function(done) {
+
+            // Monitor calls to loadFeed function
+            spyOn(window,'loadFeed').and.callThrough();
+
+            // Wait for initial load to finish
+            // Jasmine default allows 5s max
             setTimeout(function() {
                 value = 0;
-                console.log('stop');
+                console.log('stop1');
                 console.log(new Date().getTime());
                 done();
-            }, 1000); // 5000 == 5s 
+            }, 1000); // 5000 == 5s
         });
 
         it('loadFeed has been called', function() {
@@ -111,60 +117,63 @@ $(function() {
         });
 
         it('at least one entry was created', function() {
-            console.log('async call');
+            console.log('async1 call');
             console.log(new Date().getTime());
-            console.log(document.getElementsByClassName('entry').length);
-            expect(document.getElementsByClassName('entry').length).toBeGreaterThan(0);
+            var loadlength = document.getElementsByClassName('entry').length;
+            console.log("length of entries loaded: " + loadlength);
+            expect(loadlength).toBeGreaterThan(0);
         });
-        
     });
-    
 
     /* TODO: Write a new test suite named "New Feed Selection"
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+       /* TODO: Write a test that ensures when a new feed is loaded
+       * by the loadFeed function that the content actually changes.
+       * Remember, loadFeed() is asynchronous.
+       */
     describe('New Feed Selection', function() {
 
         var titleOne = '';
         var titleTwo = '';
 
-        beforeAll(function(done) {
-            console.log('start');
-            console.log(new Date().getTime());
-            
-            spyOn(window, 'loadFeed').and.callThrough();
+        // No initial delay necessary
+        // Specs are run sequentially
+        // The inital page is already loaded because of dealy in 'Initial Entries'
+        beforeAll(function() {
 
-            setTimeout(function() {
-                value = 0;
-                console.log('stop');
-                console.log(new Date().getTime());
-                done();
-            }, 1000); // 5000 == 5s 
+            // Monitor calls to loadFeed function
+            spyOn(window,'loadFeed').and.callThrough();
+
         });
 
         it('original feed load complete', function() {
-            value++;
-            console.log('async call');
+
+            console.log('start2');
             console.log(new Date().getTime());
-            console.log(document.getElementsByClassName('entry')[0].children[0].innerHTML);
             titleOne = document.getElementsByClassName('entry')[0].children[0].innerHTML;
-            console.log(titleOne);
-            expect(value).toBeGreaterThan(0);
+            console.log("1st title: " + titleOne);
+
+            // Need to have expect statement
+            expect(titleOne).toBeDefined();
+
+            // Trigger another feed load by calling loadFeed()
+            // Assume that there's at least one more feed, different from original feed
             loadFeed(1);
-            //expect(document.getElementsByClassName('entry').length).toBeGreaterThan(0);
+
         });
-        
+
         it('new feed load complete', function(done) {
             setTimeout(function() {
-                console.log('2nd call');
-                console.log(new Date().getTime()); 
-                //expect(value).toBeGreaterThan(0);
+
+                console.log('async2 call');
+                console.log(new Date().getTime());
+
                 titleTwo = document.getElementsByClassName('entry')[0].children[0].innerHTML;
-                console.log(titleTwo);
+                console.log("2nd title: " + titleTwo);
+
+                // Expect at least one more title differing from first
                 expect(titleOne).not.toEqual(titleTwo);
+
                 done();
             }, 1000);
         });
