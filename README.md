@@ -1,3 +1,22 @@
+# How to Start
+
+Fork this repository on Github, then clone it onto your machine from your Github account:
+
+```
+    $> cd $YOUR_PROJECT_DIR
+    $> git clone https://github.com/YOURGITHUBID/frontend-nanodegree-feedreader.git
+```
+This will create directory $YOUR_PROJECT_DIR/frontend-nanodegree-feedreader containing file index.html. Open index.html in Chrome browser. You will see a page that is partitioned into two halfs. The upper half is the feedreader application and the lower half is the Jasmine test runner showing test results. All test should pass indicating 9 specs, 0 failures.
+
+
+![](jasmine.png)
+
+---
+
+# Udacity Instructions:
+
+---
+
 # Project Overview
 
 In this project you are given a web-based application that reads RSS feeds. The original developer of this application clearly saw the value in testing, they've already included [Jasmine](http://jasmine.github.io/) and even started writing their first test suite! Unfortunately, they decided to move on to start their own company and we're now left with an application with an incomplete test suite. That's where you come in.
