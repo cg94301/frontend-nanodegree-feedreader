@@ -22,7 +22,7 @@ $(function() {
          * page?
          */
 
-        /* 
+        /*
            Test by simply using built in Jasmine expect defined tests
            on allFeeds array
         */
@@ -135,7 +135,7 @@ $(function() {
        */
     describe('New Feed Selection', function() {
 
-        /* 
+        /*
            Test by loading two different feeds and comparing their titles
         */
         var titleOne = '';
