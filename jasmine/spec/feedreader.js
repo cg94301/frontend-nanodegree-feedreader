@@ -21,6 +21,12 @@ $(function() {
          * allFeeds in app.js to be an empty array and refresh the
          * page?
          */
+
+        /* 
+           Test by simply using built in Jasmine expect defined tests
+           on allFeeds array
+        */
+
         it('are defined', function() {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
@@ -68,6 +74,13 @@ $(function() {
      */
     describe('The menu', function() {
 
+        /*
+          Test by selecting the menu-hidden class on the body element:
+          Before triggering hide menu it should exist.
+          After triggering hide menu once it should not exist.
+          After triggering hide menu twice it should exist.
+        */
+
         it('is hidden per default', function() {
             expect($('body').attr('class')).toBe('menu-hidden');
         });
@@ -90,6 +103,11 @@ $(function() {
      * the use of Jasmine's beforeEach and asynchronous done() function.
      */
     describe('Initial Entries', function() {
+
+        /*
+          Test by loading a feed, spying on call completion, 
+          and checking for entries
+        */
 
         beforeAll(function(done) {
 
@@ -117,30 +135,34 @@ $(function() {
        */
     describe('New Feed Selection', function() {
 
+        /* 
+           Test by loading two different feeds and comparing their titles
+        */
         var titleOne = '';
         var titleTwo = '';
 
         it('loads feed 1', function(done) {
 
-            // Trigger feed 0 load by calling loadFeed()
+            // load feed 0
             loadFeed(0, function() {
                 titleOne = $('.entry')[0].children[0].innerHTML;
                 done();
             });
 
+            // make sure title exists
             expect(titleOne).toBeDefined();
 
         });
 
         it('loads feed 2 different from feed 1', function(done) {
 
-            // Trigger feed 1 load by calling loadFeed()
+            // load feed 2
             loadFeed(1, function() {
                 titleTwo = $('.entry')[0].children[0].innerHTML;
                 done();
             });
 
-            // Establish that both titles are different
+            // Establish that both feed titles are different
             expect(titleOne).not.toEqual(titleTwo);
 
         });
