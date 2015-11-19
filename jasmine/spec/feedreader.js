@@ -105,7 +105,7 @@ $(function() {
         });
 
         it('at least one entry was created', function() {
-            expect($('.entry').length).toBeGreaterThan(0);
+            expect($('.feed .entry')).toBeDefined();
         });
     });
 
