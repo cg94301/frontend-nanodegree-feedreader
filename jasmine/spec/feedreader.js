@@ -107,8 +107,7 @@ $(function() {
         });
 
         it('at least one entry was created', function() {
-            var loadlength = document.getElementsByClassName('entry').length;
-            expect(loadlength).toBeGreaterThan(0);
+            expect($('.entry').length).toBeGreaterThan(0);
         });
     });
 
