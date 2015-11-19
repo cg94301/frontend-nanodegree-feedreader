@@ -91,22 +91,15 @@ $(function() {
      */
     describe('Initial Entries', function() {
 
-        console.log('start1');
         console.log(new Date().getTime());
 
         beforeAll(function(done) {
 
             // Monitor calls to loadFeed function
             spyOn(window,'loadFeed').and.callThrough();
+            // Call loadFeed and signal done in callback
+            loadFeed(0, function() { done();} );
 
-            // Wait for initial load to finish
-            // Jasmine default allows 5s max
-            setTimeout(function() {
-                value = 0;
-                console.log('stop1');
-                console.log(new Date().getTime());
-                done();
-            }, 1000); // 5000 == 5s
         });
 
         it('loadFeed has been called', function() {
@@ -114,10 +107,7 @@ $(function() {
         });
 
         it('at least one entry was created', function() {
-            console.log('async1 call');
-            console.log(new Date().getTime());
             var loadlength = document.getElementsByClassName('entry').length;
-            console.log("length of entries loaded: " + loadlength);
             expect(loadlength).toBeGreaterThan(0);
         });
     });
