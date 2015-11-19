@@ -91,8 +91,6 @@ $(function() {
      */
     describe('Initial Entries', function() {
 
-        console.log(new Date().getTime());
-
         beforeAll(function(done) {
 
             // Monitor calls to loadFeed function
@@ -122,46 +120,29 @@ $(function() {
         var titleOne = '';
         var titleTwo = '';
 
-        // No initial delay necessary
-        // Specs are run sequentially
-        // The inital page is already loaded because of dealy in 'Initial Entries'
-        beforeAll(function() {
+        it('loads feed 1', function(done) {
 
-            // Monitor calls to loadFeed function
-            spyOn(window,'loadFeed').and.callThrough();
+            // Trigger feed 0 load by calling loadFeed()
+            loadFeed(0, function() {
+                titleOne = $('.entry')[0].children[0].innerHTML;
+                done();
+            });
 
-        });
-
-        it('original feed load complete', function() {
-
-            console.log('start2');
-            console.log(new Date().getTime());
-            titleOne = document.getElementsByClassName('entry')[0].children[0].innerHTML;
-            console.log("1st title: " + titleOne);
-
-            // Need to have expect statement
             expect(titleOne).toBeDefined();
 
-            // Trigger another feed load by calling loadFeed()
-            // Assume that there's at least one more feed, different from original feed
-            loadFeed(1);
-
         });
 
-        it('new feed load complete', function(done) {
-            setTimeout(function() {
+        it('loads feed 2 different from feed 1', function(done) {
 
-                console.log('async2 call');
-                console.log(new Date().getTime());
-
-                titleTwo = document.getElementsByClassName('entry')[0].children[0].innerHTML;
-                console.log("2nd title: " + titleTwo);
-
-                // Expect at least one more title differing from first
-                expect(titleOne).not.toEqual(titleTwo);
-
+            // Trigger feed 1 load by calling loadFeed()
+            loadFeed(1, function() {
+                titleTwo = $('.entry')[0].children[0].innerHTML;
                 done();
-            }, 1000);
+            });
+
+            // Establish that both titles are different
+            expect(titleOne).not.toEqual(titleTwo);
+
         });
 
     });
