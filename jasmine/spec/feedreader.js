@@ -73,12 +73,9 @@ $(function() {
         });
 
         it('visibility can be toggled', function() {
-            var event = {
-                type: 'click'
-            };
-            $('.menu-icon-link').trigger(event);
+            $('.menu-icon-link').trigger('click');
             expect(document.getElementsByClassName('menu-hidden')[0]).toBeUndefined();
-            $('.menu-icon-link').trigger(event);
+            $('.menu-icon-link').trigger('click');
             expect(document.getElementsByClassName('menu-hidden')[0].className).toBe('menu-hidden');
         });
 
